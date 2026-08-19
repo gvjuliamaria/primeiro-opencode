@@ -51,7 +51,6 @@ Mudanças principais entre a ideia inicial e a versão final:
 - Cores: adotei o fundo escuro (#120D23) e amarelo (#F5C61C) para contraste e identidade.
 - Tipografia: usamos Inter (Google Fonts) como alternativa gratuita.
 - Ilustrações: substituímos esboços originais ícones públicos e disponíveis.
-- Cards: implementamos lazy-loading com placeholder (skeleton) e hover interaction.
 - Modais: login e checkout simulados com focus-trap e validação básica.
 
 Alterações motivadas por uso de IA vs. escolhas humanas:
