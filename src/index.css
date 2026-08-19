@@ -1,0 +1,146 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --brand: #0f172a; /* dark text */
+  --site-bg: #120D23; /* deep blue-purple background from your design */
+  --accent: #F5C61C; /* vivid yellow highlight */
+}
+
+html, body, #root {
+  height: 100%;
+}
+
+
+html, body { height: 100%; }
+body {
+  font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+  background: radial-gradient(1200px 600px at 10% 10%, rgba(14,10,30,0.65), transparent 20%), linear-gradient(180deg, var(--site-bg), #0b0a18 70%);
+  color: #e6eef8;
+}
+
+/* smooth scroll for anchor navigation */
+html { scroll-behavior: smooth }
+
+/* Sections spacing */
+.section { padding: 4.5rem 0 }
+.section .section-title { font-size: 1.5rem; font-weight: 700; margin-bottom: 1rem }
+.kicker { color: var(--accent); font-weight: 700; font-size: 0.875rem }
+
+
+/* small visual helpers to approximate the Figma look */
+.btn-primary { @apply px-4 py-2 rounded-md bg-[var(--accent)] text-slate-900 font-semibold shadow-md; }
+.btn-secondary { @apply px-4 py-2 rounded-md border border-white/20 text-white; }
+
+.card-cover { background-size: cover; background-position: center; }
+
+/* Modal animations */
+@keyframes modalShow {
+  from { opacity: 0; transform: translateY(8px) scale(0.985); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes overlayShow {
+  from { opacity: 0 }
+  to { opacity: 1 }
+}
+
+.animate-modalShow { animation: modalShow 240ms cubic-bezier(.2,.9,.2,1) both }
+.animate-overlayShow { animation: overlayShow 240ms cubic-bezier(.2,.9,.2,1) both }
+
+/* Slight focus outline fallback for inputs */
+input:focus { outline: none; }
+
+/* Site-wide micro-animations */
+@keyframes floatY {
+  0% { transform: translateY(0) }
+  50% { transform: translateY(-6px) }
+  100% { transform: translateY(0) }
+}
+
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-12px) }
+  to { opacity: 1; transform: translateX(0) }
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(8px) }
+  to { opacity: 1; transform: translateY(0) }
+}
+
+.animate-floatY { animation: floatY 4s ease-in-out infinite }
+.animate-slideInLeft { animation: slideInLeft 420ms cubic-bezier(.2,.9,.2,1) both }
+.animate-fadeUp { animation: fadeUp 420ms cubic-bezier(.2,.9,.2,1) both }
+
+/* Navbar link underline animation */
+.nav-link { position: relative; color: inherit; text-decoration: none }
+.nav-link::after { content: ''; position: absolute; left: 0; bottom: -6px; height: 2px; width: 0; background: var(--accent); transition: width 240ms cubic-bezier(.2,.9,.2,1) }
+.nav-link:hover::after, .nav-link:focus::after { width: 100% }
+
+/* Primary CTA breathing */
+.cta-breath { transition: transform 180ms ease, box-shadow 180ms ease }
+.cta-breath:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 8px 30px rgba(245,198,28,0.16) }
+
+/* Card hover */
+.card-hover { transition: transform 220ms cubic-bezier(.2,.9,.2,1), box-shadow 220ms cubic-bezier(.2,.9,.2,1); will-change: transform }
+.card-hover:hover { transform: translateY(-8px) scale(1.02) rotate(-0.6deg); box-shadow: 0 18px 40px rgba(2,6,23,0.6) }
+.card-overlay { position: absolute; inset: 0; display:flex; align-items:flex-end; justify-content:stretch; padding:1rem; background: linear-gradient(180deg, rgba(0,0,0,0) 40%, rgba(0,0,0,0.6)); opacity:0; transition: opacity 240ms ease }
+.card-hover:hover .card-overlay { opacity: 1 }
+.card-overlay .title { color: #fff; font-weight:600 }
+.card-overlay .cta { background: var(--accent); color: #08101a; padding: .4rem .6rem; border-radius: .5rem; font-weight:600 }
+
+/* reduce motion respects */
+@media (prefers-reduced-motion: reduce) {
+  .animate-modalShow, .animate-overlayShow, .animate-floatY, .animate-slideInLeft, .animate-fadeUp { animation: none !important }
+  .card-hover:hover { transform: none; box-shadow: none }
+}
+
+/* Header (frosted + shrink + animated accent line) */
+:root {
+  --header-height: 76px;
+  --header-height-compact: 52px;
+}
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  backdrop-filter: blur(8px);
+  background: linear-gradient(180deg, rgba(18,13,35,0.6), rgba(18,13,35,0.55));
+  transition: height 240ms ease, padding 240ms ease, transform 260ms ease, background 260ms ease;
+  height: var(--header-height);
+  display: flex;
+  align-items: center;
+}
+
+.site-header.header--compact { height: var(--header-height-compact); }
+.site-header.header--hidden { transform: translateY(-110%); }
+
+.site-header .brand img { transition: transform 240ms ease; }
+.site-header.header--compact .brand img { transform: scale(0.86); }
+
+/* moving accent line */
+.header-accent {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 3px;
+  background: linear-gradient(90deg, rgba(245,198,28,0.0), rgba(245,198,28,0.95), rgba(245,198,28,0.0));
+  background-size: 200% 100%;
+  animation: accentMove 4s linear infinite;
+  opacity: 0.95;
+}
+
+@keyframes accentMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* compact padding adjustments */
+.site-header .container { width: 100%; max-width: 1120px; margin: 0 auto; padding: 0 1rem; display:flex; align-items:center; justify-content:space-between }
+.site-header .nav { display:flex; gap:1.25rem; align-items:center }
